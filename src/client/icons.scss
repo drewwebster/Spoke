@@ -70,9 +70,80 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
     }
   }
 
+  .icon-ambient-light {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-sun);
+    }
+  }
+
+  .icon-directional-light {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-bolt);
+    }
+  }
+
+  .icon-point-light {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-lightbulb);
+    }
+  }
+
+  .icon-hemisphere-light {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-certificate);
+    }
+  }
+
+  .icon-spot-light {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-bullseye);
+    }
+  }
+
+  .icon-scene-reference {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-file-import);
+    }
+  }
+
+  .icon-skybox {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-cloud);
+    }
+  }
+
+  .icon-shadow {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-clone);
+    }
+  }
+
+  .icon-transform {
+    &:before {
+      @include solidIcon;
+      content: fa-content($fa-var-arrows-alt);
+    }
+  }
+
   .icon-large {
     &:before {
       font-size: 40px;
+    }
+  }
+
+  .icon-align-left {
+    &:before {
+      padding-top: 2px;
+      padding-left: 0;
+      padding-right: 4px;
     }
   }
 }

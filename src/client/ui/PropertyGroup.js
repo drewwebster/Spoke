@@ -7,6 +7,7 @@ import styles from "./PropertyGroup.scss";
 import infoIcon from "../assets/info-icon.svg";
 import { withEditor } from "./contexts/EditorContext";
 import ReactTooltip from "react-tooltip";
+import { getIconClassByName } from "../utils/icon";
 
 function PropertyGroup(props) {
   const {
@@ -60,8 +61,13 @@ function PropertyGroup(props) {
     <div className={classNames(styles.propertyGroup, props.className)}>
       <div
         className={classNames(
-          { [`${styles.header}`]: props.useDefault, [`${styles.lightHeader}`]: !props.useDefault },
-          props.headerClassName
+          {
+            [`${styles.header}`]: props.useDefault,
+            [`${styles.lightHeader}`]: !props.useDefault
+          },
+          props.headerClassName,
+          getIconClassByName(props.type),
+          "icon-align-left"
         )}
       >
         {name}
@@ -81,6 +87,7 @@ function PropertyGroup(props) {
 
 PropertyGroup.propTypes = {
   name: PropTypes.string,
+  type: PropTypes.string,
   canRemove: PropTypes.bool,
   className: PropTypes.string,
   headerClassName: PropTypes.string,

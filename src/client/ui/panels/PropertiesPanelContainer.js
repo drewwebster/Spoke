@@ -207,6 +207,7 @@ class PropertiesPanelContainer extends Component {
       <PropertyGroup
         name={getDisplayName(component.name)}
         key={component.name}
+        type={component.name}
         canRemove={componentDefinition.canRemove}
         removeHandler={this.onRemoveComponent.bind(this, component.name)}
         src={component.src}
