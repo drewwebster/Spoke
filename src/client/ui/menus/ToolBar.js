@@ -24,17 +24,20 @@ export default class ToolBar extends Component {
         {
           name: "move",
           type: "fa-arrows-alt",
-          onClick: () => this.onMoveSelected()
+          onClick: () => this.onMoveSelected(),
+          tooltipContent: "Move [W]"
         },
         {
           name: "rotate",
           type: "fa-sync-alt",
-          onClick: () => this.onRotateSelected()
+          onClick: () => this.onRotateSelected(),
+          tooltipContent: "Rotate [E]"
         },
         {
           name: "scale",
           type: "fa-arrows-alt-v",
-          onClick: () => this.onScaleSelected()
+          onClick: () => this.onScaleSelected(),
+          tooltipContent: "Scale [R]"
         }
       ],
       toolToggles: [
@@ -121,9 +124,18 @@ export default class ToolBar extends Component {
 
   renderToolButtons = buttons => {
     return buttons.map(btn => {
-      const { onClick, name, type } = btn;
+      const { onClick, name, type, tooltipContent } = btn;
       const selected = btn.name === this.state.toolButtonSelected;
-      return <ToolButton toolType={type} key={type} onClick={onClick} selected={selected} id={name} />;
+      return (
+        <ToolButton
+          toolType={type}
+          key={type}
+          onClick={onClick}
+          selected={selected}
+          id={name}
+          tooltipContent={tooltipContent}
+        />
+      );
     });
   };
 
