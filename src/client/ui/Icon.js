@@ -3,43 +3,75 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import styles from "./Icon.scss";
 import StringInput from "./inputs/StringInput";
+import ReactTooltip from "react-tooltip";
 
-export default function Icon({ name, src, selected, rename, onClick, onChange, onCancel, onSubmit, className }) {
-  const fullClassName = classNames(styles.icon, className, {
-    [styles.selected]: selected
-  });
-  const [fileName, fileExt] = name.split(".");
+export default class Icon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isTextOverflown: false
+    };
+    this.textRef = null;
+  }
 
-  return (
-    <div className={fullClassName} onMouseDown={onClick}>
-      <img className={styles.image} src={src} />
-      {rename ? (
-        <StringInput
-          autoFocus={rename}
-          className={styles.name}
-          value={name}
-          onChange={onChange}
-          onBlur={onCancel}
-          onKeyUp={e => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              onSubmit(name);
-            } else if (e.key === "Escape") {
-              e.preventDefault();
-              onCancel();
-            }
-          }}
-        />
-      ) : (
-        <div>
-          <div className={styles.name} title={fileName}>
-            {fileName}
+  componentDidMount() {
+    this.checkTextOverflown();
+  }
+
+  checkTextOverflown = () => {
+    if (!this.textRef) return;
+    this.setState({ isTextOverflown: this.textRef.clientWidth < this.textRef.scrollWidth });
+  };
+
+  render() {
+    const { name, src, selected, rename, onClick, onChange, onCancel, onSubmit, className } = this.props;
+    const fullClassName = classNames(styles.icon, className, {
+      [styles.selected]: selected
+    });
+    const [fileName, fileExt] = name.split(".");
+
+    return (
+      <div className={fullClassName} onMouseDown={onClick} data-tip data-for={name}>
+        <img className={styles.image} src={src} />
+        {rename ? (
+          <StringInput
+            autoFocus={rename}
+            className={styles.name}
+            value={name}
+            onChange={onChange}
+            onBlur={onCancel}
+            onKeyUp={e => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                onSubmit(name);
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                onCancel();
+              }
+            }}
+          />
+        ) : (
+          <div>
+            <div
+              className={styles.name}
+              title={fileName}
+              ref={element => {
+                this.textRef = element;
+              }}
+            >
+              {fileName}
+            </div>
+            <div className={styles.type}>{fileExt}</div>
           </div>
-          <div className={styles.type}>{fileExt}</div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+        {this.state.isTextOverflown && (
+          <ReactTooltip id={name} place="bottom" effect="solid" className="regularTooltip">
+            <span>{fileName}</span>
+          </ReactTooltip>
+        )}
+      </div>
+    );
+  }
 }
 
 Icon.propTypes = {
