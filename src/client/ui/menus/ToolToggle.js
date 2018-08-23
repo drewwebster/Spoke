@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import "react-toggle/style.css";
 import classNames from "classnames";
 import styles from "./ToolToggle.scss";
+import "../../global.scss";
+import ReactTooltip from "react-tooltip";
 
 export default class ToolToggle extends Component {
   constructor(props) {
@@ -47,12 +49,17 @@ export default class ToolToggle extends Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <Toggle
-          defaultChecked={this.state.isChecked}
-          onChange={this.onChange}
-          icons={this.state.icons}
-          className={this.state.isSwitch ? styles.toggleSwitch : styles.toggleOnOff}
-        />
+        <div data-tip data-for={this.props.name}>
+          <Toggle
+            defaultChecked={this.state.isChecked}
+            onChange={this.onChange}
+            icons={this.state.icons}
+            className={this.state.isSwitch ? styles.toggleSwitch : styles.toggleOnOff}
+          />
+          <ReactTooltip className="regularTooltip" place="bottom" effect="solid" id={this.props.name}>
+            <span>{this.props.tooltipContent}</span>
+          </ReactTooltip>
+        </div>
         {this.renderContent()}
       </div>
     );
@@ -68,5 +75,7 @@ ToolToggle.propTypes = {
     checked: PropTypes.string,
     unchecked: PropTypes.string
   }),
-  editor: PropTypes.object
+  editor: PropTypes.object,
+  tooltipContent: PropTypes.string,
+  name: PropTypes.string
 };

@@ -47,6 +47,7 @@ export default class ToolBar extends Component {
             checked: "fa-cube",
             unchecked: "fa-globe"
           },
+          tooltipContent: "Global/Local Transform [X]",
           action: status => this.onCoordinationChanged(status)
         },
         {
@@ -59,6 +60,7 @@ export default class ToolBar extends Component {
             checked: "fa-magnet",
             unchecked: "fa-magnet"
           },
+          tooltipContent: "Snapping On/Off [T]",
           action: status => this.onSnappingChanged(status)
         }
       ],
@@ -127,7 +129,7 @@ export default class ToolBar extends Component {
 
   renderToolToggles = toggles => {
     return toggles.map(toggle => {
-      const { name, text, action, icons, isSwitch, children } = toggle;
+      const { name, text, action, icons, isSwitch, children, tooltipContent } = toggle;
       return (
         <ToolToggle
           text={text}
@@ -136,6 +138,7 @@ export default class ToolBar extends Component {
           action={action}
           icons={icons}
           isSwitch={isSwitch}
+          tooltipContent={tooltipContent}
           editor={this.props.editor}
         >
           {children}
