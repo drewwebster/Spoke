@@ -23,12 +23,16 @@ function FileInput({ value, isValid, onChange, showDialog, hideDialog, filters, 
   };
 
   return (
-    <div className={inputStyles} data-tip={isValid ? "" : "File does not exist"} data-type={isValid ? "" : "error"}>
+    <div className={inputStyles} data-tip>
       <input
         value={(value && project.getRelativeURI(value)) || ""}
         onChange={e => onChange(project.getAbsoluteURI(e.target.value))}
       />
-      {isValid ? null : <ReactTooltip />}
+      {isValid ? null : (
+        <ReactTooltip className="regularTooltip" place="bottom" effect="solid">
+          <span className="errorTooltipContent">{"File does not exist."}</span>
+        </ReactTooltip>
+      )}
       <Button onClick={onClick} />
     </div>
   );
