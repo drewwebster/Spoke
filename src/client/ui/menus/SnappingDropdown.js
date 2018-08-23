@@ -4,6 +4,7 @@ import NumericInput from "../inputs/NumericInput";
 import InputGroup from "../InputGroup";
 import styles from "./SnappingDropdown.scss";
 import classNames from "classnames";
+import ReactTooltip from "react-tooltip";
 
 export default class SnappingDropdown extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ export default class SnappingDropdown extends React.Component {
   render() {
     const { snapMoveValue, snapRotateValue } = this.state;
     return (
-      <div className={classNames(styles.wrapper)}>
+      <div className={classNames(styles.wrapper)} data-tip data-for="snap-options">
         <div className={styles.header} onClick={() => this.toggleList()}>
           <div className={styles.headerTitle}>{this.state.headerTitle}</div>
           {this.state.listOpen ? <i className="fa fa-angle-up fa-12px" /> : <i className="fa fa-angle-down fa-12px" />}
@@ -74,6 +75,11 @@ export default class SnappingDropdown extends React.Component {
               </InputGroup>
             </li>
           </ul>
+        )}
+        {!this.state.listOpen && (
+          <ReactTooltip className="regularTooltip" id="snap-options" place="bottom" effect="solid">
+            <span>Snapping Options</span>
+          </ReactTooltip>
         )}
       </div>
     );
