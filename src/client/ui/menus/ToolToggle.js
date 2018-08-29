@@ -11,13 +11,12 @@ export default class ToolToggle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false,
       isSwitch: props.isSwitch,
       icons: {
         checked: this.getIcons(props.icons.checked),
         unchecked: this.getIcons(props.icons.unchecked)
       },
-      title: props.text[0]
+      title: props.text[!props.isChecked ? 1 : 0]
     };
   }
 
@@ -27,11 +26,7 @@ export default class ToolToggle extends Component {
   };
 
   onChange = () => {
-    this.props.action(this.state.isChecked);
-    this.setState({
-      isChecked: !this.state.isChecked,
-      title: this.props.text[!this.state.isChecked ? 1 : 0]
-    });
+    this.props.action();
   };
 
   renderContent = () => {
@@ -39,7 +34,7 @@ export default class ToolToggle extends Component {
     if (!this.props.children) {
       return (
         <div className={styles.toggleText}>
-          <span>{this.state.title}</span>
+          <span>{this.props.text[!this.props.isChecked ? 0 : 1]}</span>
         </div>
       );
     }
@@ -69,6 +64,7 @@ export default class ToolToggle extends Component {
 ToolToggle.propTypes = {
   text: PropTypes.array,
   action: PropTypes.func,
+  isChecked: PropTypes.bool,
   isSwitch: PropTypes.bool,
   children: PropTypes.node,
   icons: PropTypes.shape({

@@ -24,7 +24,7 @@ export default class Icon extends React.Component {
   };
 
   render() {
-    const { name, src, selected, rename, onClick, onChange, onCancel, onSubmit, className } = this.props;
+    const { name, selected, rename, onClick, onChange, onCancel, onSubmit, className } = this.props;
     const fullClassName = classNames(styles.icon, className, {
       [styles.selected]: selected
     });
@@ -32,7 +32,6 @@ export default class Icon extends React.Component {
 
     return (
       <div className={fullClassName} onMouseDown={onClick} data-tip data-for={name}>
-        <img className={styles.image} src={src} />
         {rename ? (
           <StringInput
             autoFocus={rename}
@@ -76,7 +75,6 @@ export default class Icon extends React.Component {
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
   selected: PropTypes.bool,
   rename: PropTypes.bool,
   onClick: PropTypes.func,

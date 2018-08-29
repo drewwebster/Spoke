@@ -6,6 +6,9 @@ import styles from "./SnappingDropdown.scss";
 import classNames from "classnames";
 import ReactTooltip from "react-tooltip";
 
+const RAD2DEG = 180 / Math.PI;
+const DEG2RAD = Math.PI / 180;
+
 export default class SnappingDropdown extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +22,7 @@ export default class SnappingDropdown extends React.Component {
     this.props.editor.signals.viewportInitialized.add(viewport => {
       this.setState({
         snapMoveValue: viewport._transformControls.translationSnap,
-        snapRotateValue: viewport._transformControls.rotationSnap,
+        snapRotateValue: (viewport._transformControls.rotationSnap || 0) * RAD2DEG,
         snapScaleValue: viewport._transformControls.size
       });
     });
@@ -38,19 +41,21 @@ export default class SnappingDropdown extends React.Component {
   }
 
   setSnapValue(type, value) {
+    let v = value;
     switch (type) {
       case "translate":
         this.setState({ snapMoveValue: value });
         break;
       case "rotate":
-        this.setState({ snapRotateValue: value });
+        this.setState({ snapRotateValue: v });
+        v = v * DEG2RAD;
         break;
       default:
         break;
     }
     this.props.editor.signals.snapValueChanged.dispatch({
       type: type,
-      value: value
+      value: v
     });
   }
 
