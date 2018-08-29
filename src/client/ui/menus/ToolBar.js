@@ -45,6 +45,7 @@ export default class ToolBar extends Component {
           checked: "fa-cube",
           unchecked: "fa-globe"
         },
+        tooltipContent: "Global/Local Transform [X]",
         action: () => this.onCoordinationChanged()
       },
       snapToggle: {
@@ -58,6 +59,7 @@ export default class ToolBar extends Component {
           checked: "fa-magnet",
           unchecked: "fa-magnet"
         },
+        tooltipContent: "Snapping On/Off [T]",
         action: () => this.onSnappingChanged()
       },
       toolButtonSelected: "translate"
@@ -174,6 +176,7 @@ export default class ToolBar extends Component {
             isSwitch={spaceToggle.isSwitch}
             isChecked={spaceToggle.isChecked}
             editor={this.props.editor}
+            tooltipContent={spaceToggle.tooltipContent}
           >
             {spaceToggle.children}
           </ToolToggle>
@@ -186,6 +189,7 @@ export default class ToolBar extends Component {
             isSwitch={snapToggle.isSwitch}
             isChecked={snapToggle.isChecked}
             editor={this.props.editor}
+            tooltipContent={snapToggle.tooltipContent}
           >
             {snapToggle.children}
           </ToolToggle>
