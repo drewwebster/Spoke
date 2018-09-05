@@ -134,7 +134,7 @@ export default class ToolBar extends Component {
     if (!menu.items || menu.items.length === 0) {
       return (
         <MenuItem key={menu.name} onClick={menu.action}>
-          {menu.name}
+          {this.renderItemContent(menu)}
         </MenuItem>
       );
     } else {
@@ -148,10 +148,19 @@ export default class ToolBar extends Component {
     }
   };
 
+  renderItemContent = menu => {
+    return (
+      <div>
+        <div>{menu.name}</div>
+        <div>{menu.name}</div>
+      </div>
+    );
+  };
+
   render() {
     const { toolButtons, spaceToggle, snapToggle } = this.state;
     return (
-      <div className={styles.toolbar}>
+      <nav className={styles.toolbar}>
         <div className={styles.toolbtns}>{this.renderToolButtons(toolButtons)}</div>
         <div className={styles.tooltoggles}>
           <ToolToggle
@@ -184,7 +193,7 @@ export default class ToolBar extends Component {
             return this.renderMenus(menu);
           })}
         </ContextMenu>
-      </div>
+      </nav>
     );
   }
 }
