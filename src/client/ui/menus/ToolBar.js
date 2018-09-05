@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ToolButton from "./ToolButton";
 import ToolToggle from "./ToolToggle";
-import { showMenu, ContextMenu, MenuItem, SubMenu } from "react-contextmenu";
+import { showMenu, ContextMenu, MenuItem } from "react-contextmenu";
 import styles from "./ToolBar.scss";
 import SnappingDropdown from "./SnappingDropdown";
+import ToolSubMenu from "./ToolSubMenu";
 
 export default class ToolBar extends Component {
   constructor(props) {
@@ -138,11 +139,11 @@ export default class ToolBar extends Component {
       );
     } else {
       return (
-        <SubMenu key={menu.name} title={menu.name}>
+        <ToolSubMenu key={menu.name} title={menu.name} hoverDelay={100}>
           {menu.items.map(item => {
             return this.renderMenus(item);
           })}
-        </SubMenu>
+        </ToolSubMenu>
       );
     }
   };
