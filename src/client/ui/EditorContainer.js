@@ -21,6 +21,7 @@ import ProgressDialog from "./dialogs/ProgressDialog";
 import ErrorDialog from "./dialogs/ErrorDialog";
 import ConflictError from "../editor/ConflictError";
 import { getUrlDirname, getUrlFilename } from "../utils/url-path";
+import { getKeysByOS, keyMap } from "../utils/hotkeys";
 
 class EditorContainer extends Component {
   static defaultProps = {
@@ -94,19 +95,7 @@ class EditorContainer extends Component {
       DialogComponent: null,
       dialogProps: {},
       openModal: null,
-      keyMap: {
-        translateTool: "w",
-        rotateTool: "e",
-        scaleTool: "r",
-        spaceTool: "x",
-        snapTool: "t",
-        delete: ["del", "backspace"],
-        duplicate: ["ctrl+d", "command+d"],
-        save: ["ctrl+s", "command+s"],
-        saveAs: ["ctrl+shift+s", "command+shift+s"],
-        undo: ["ctrl+z", "command+z"],
-        redo: ["ctrl+shift+z", "command+shift+z"]
-      },
+      keyMap: keyMap,
       menus: [
         {
           name: "File",
@@ -117,11 +106,13 @@ class EditorContainer extends Component {
             },
             {
               name: "Save Scene",
-              action: e => this.onSave(e)
+              action: e => this.onSave(e),
+              hotkeys: getKeysByOS(keyMap.save)
             },
             {
               name: "Save Scene As...",
-              action: e => this.onSaveAs(e)
+              action: e => this.onSaveAs(e),
+              hotkeys: getKeysByOS(keyMap.saveAs)
             },
             {
               name: "Export Scene...",

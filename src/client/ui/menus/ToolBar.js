@@ -149,10 +149,18 @@ export default class ToolBar extends Component {
   };
 
   renderItemContent = menu => {
+    const { name, hotkeys } = menu;
+    const layout = {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between"
+    };
     return (
-      <div>
-        <div>{menu.name}</div>
-        <div>{menu.name}</div>
+      <div style={layout}>
+        <div>{name}</div>
+        {hotkeys && <div>{hotkeys}</div>}
       </div>
     );
   };
