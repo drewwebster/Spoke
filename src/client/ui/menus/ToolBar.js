@@ -15,7 +15,8 @@ export default class ToolBar extends Component {
         {
           name: "menu",
           type: "fa-bars",
-          onClick: e => this.onMenuSelected(e)
+          onClick: e => this.onMenuSelected(e),
+          submenu: true
         },
         {
           name: "translate",
@@ -126,20 +127,31 @@ export default class ToolBar extends Component {
     return buttons.map(btn => {
       const { onClick, name, type } = btn;
       const selected = btn.name === this.state.toolButtonSelected;
-      return <ToolButton toolType={type} key={type} onClick={onClick} selected={selected} id={name} />;
+      return (
+        <li key={type} className={styles.toolbtns} role="menuitem">
+          <ToolButton toolType={type} onClick={onClick} selected={selected} id={name} />
+          {btn.submenu && (
+            <ContextMenu id="menu">
+              {this.props.menus.map(menu => {
+                return this.renderMenus(menu);
+              })}
+            </ContextMenu>
+          )}
+        </li>
+      );
     });
   };
 
   renderMenus = menu => {
     if (!menu.items || menu.items.length === 0) {
       return (
-        <MenuItem key={menu.name} onClick={menu.action}>
+        <MenuItem key={menu.name} onClick={menu.action} role="menuitem" tabIndex="-1">
           {this.renderItemContent(menu)}
         </MenuItem>
       );
     } else {
       return (
-        <ToolSubMenu key={menu.name} title={menu.name} hoverDelay={100}>
+        <ToolSubMenu key={menu.name} title={menu.name} role="menu" hoverDelay={100}>
           {menu.items.map(item => {
             return this.renderMenus(item);
           })}
@@ -169,38 +181,37 @@ export default class ToolBar extends Component {
     const { toolButtons, spaceToggle, snapToggle } = this.state;
     return (
       <nav className={styles.toolbar}>
-        <div className={styles.toolbtns}>{this.renderToolButtons(toolButtons)}</div>
-        <div className={styles.tooltoggles}>
-          <ToolToggle
-            text={spaceToggle.text}
-            key={spaceToggle.name}
-            name={spaceToggle.name}
-            action={spaceToggle.action}
-            icons={spaceToggle.icons}
-            isSwitch={spaceToggle.isSwitch}
-            isChecked={spaceToggle.isChecked}
-            editor={this.props.editor}
-          >
-            {spaceToggle.children}
-          </ToolToggle>
-          <ToolToggle
-            text={snapToggle.text}
-            key={snapToggle.name}
-            name={snapToggle.name}
-            action={snapToggle.action}
-            icons={snapToggle.icons}
-            isSwitch={snapToggle.isSwitch}
-            isChecked={snapToggle.isChecked}
-            editor={this.props.editor}
-          >
-            {snapToggle.children}
-          </ToolToggle>
-        </div>
-        <ContextMenu id="menu">
-          {this.props.menus.map(menu => {
-            return this.renderMenus(menu);
-          })}
-        </ContextMenu>
+        <ul role="menubar" className={styles.toolbar}>
+          {this.renderToolButtons(toolButtons)}
+          <li className={styles.tooltoggles} role="menuitem">
+            <ToolToggle
+              text={spaceToggle.text}
+              key={spaceToggle.name}
+              name={spaceToggle.name}
+              action={spaceToggle.action}
+              icons={spaceToggle.icons}
+              isSwitch={spaceToggle.isSwitch}
+              isChecked={spaceToggle.isChecked}
+              editor={this.props.editor}
+            >
+              {spaceToggle.children}
+            </ToolToggle>
+          </li>
+          <li className={styles.tooltoggles} role="menuitem">
+            <ToolToggle
+              text={snapToggle.text}
+              key={snapToggle.name}
+              name={snapToggle.name}
+              action={snapToggle.action}
+              icons={snapToggle.icons}
+              isSwitch={snapToggle.isSwitch}
+              isChecked={snapToggle.isChecked}
+              editor={this.props.editor}
+            >
+              {snapToggle.children}
+            </ToolToggle>
+          </li>
+        </ul>
       </nav>
     );
   }

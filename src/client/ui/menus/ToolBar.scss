@@ -5,6 +5,9 @@
   flex-direction: row;
   height: 40px;
   background-color: $toolbar;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
   :local(.toolbtns) {
     width: auto;
